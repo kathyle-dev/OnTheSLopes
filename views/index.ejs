@@ -4,19 +4,36 @@
 
 <div class="form">
     <form action="/posts" method="POST">
-      <input type="text" id="first_name" name="first" required>
-      <input type="text" id="last_name" name="last" required>
-      <button type="submit" id="btn">Submit</button> 
+      <h1 class = "post_title">What's on the Slope!</h1>
+      <input type="email" id="username" name="email" required>
+      <input type="input" id="user_text" name="user_text" required>
+<!--      <input type="text" id="zip" name="zip" required>-->
+      <label for="cars">Choose a selection:</label>
+      <select id="gear" name="gear_options">
+        <option value="equipment">Equipment</option>
+        <option value="car pooling">Car Pooling</option>
+        <option value="slope buddy">SLope Buddy</option>
+<!--        <option value="ski resorts">Ski Resorts</option>-->
+      </select>
+      <button type="submit" id="btn">Post</button>
     </form>
 </div>
-<% if(name!= null){ %>  
-<% console.log(name, 'This is name from index.js')%>
-<% for (let i=0; i<name.length; i++){ %>
+
+<div>
+  <h1>Search nearby Ski Resorts</h1>
+  <p>Input zip code</p>
+  <input type="text" id="zip" name="zip" required>
+  <button type="submit" id="zip_btn">Search</button>
+</div>
+
+<% if(posts!= null){ %>
+<% console.log(posts, 'This is name from index.js')%>
+<% for (let i=0; i<posts.length; i++){ %>
   <div class="card mb-3">
     <img class="card-img-top" src="..." alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title"><%=name[i].fname%></h5>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <h5 class="card-title"><%=posts[i].email%></h5>
+      <p class="card-text"><%=posts[i].text%>.</p>
       <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
     </div>
   </div>

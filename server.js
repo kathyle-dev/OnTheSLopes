@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 8080;
 const express = require("express");
 const app = express();
 const cors = require("cors");
+require('dotenv').config()
 
 //middleware uses  ======================================================
 app.set("view engine", "ejs"); // set up ejs for templating
@@ -30,8 +31,9 @@ app.post("/posts", (req, res) => {
   //   console.log(req.body.first_name + " was added by post on Server");
   data.collection("posts").insertOne(
     {
-      fname: req.body.first,
-      lname: req.body.last,
+      email: req.body.email,
+      text:  req.body.user_text,
+      comments: [],
     },
     (error, result) => {
       if (error) return console.log(error);
@@ -47,7 +49,7 @@ app.get("/", (req, res) => {
     .toArray((error, result) => {
       if (error) return console.log(error);
       res.render("index.ejs", {
-        name: result || null,
+        posts: result || null,
       });
     });
 });
