@@ -17,7 +17,7 @@ const { Db } = require("mongodb");
 const database = require("./config/database");
 
 var data;
-mongoose.connect(database.connectionStringURL, (err, db) => {
+mongoose.connect(process.env.CONNECTION_STRING, (err, db) => {
   if (err) return console.log(err);
   data = db;
 });
