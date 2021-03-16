@@ -1,3 +1,6 @@
+//APPENDING MY CONFIG VARIABLES TO process.env
+require('dotenv').config()
+
 const PORT = process.env.PORT || 8080;
 const express = require("express");
 const app = express();
@@ -15,7 +18,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 //connect to mongoDB database ============================================
 const mongoose = require("mongoose");
 const { Db } = require("mongodb");
-//const database = require("./config/database"); to test run on heroku
+
 
 var data;
 mongoose.connect(process.env.CONNECTION_STRING, (err, db) => {
