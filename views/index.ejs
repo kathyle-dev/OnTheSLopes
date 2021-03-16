@@ -2,16 +2,26 @@
 
 <body>
 
-
-<div class="card mb-3">
+<div class="form">
+    <form action="/posts" method="POST">
+      <input type="text" id="first_name" name="first" required>
+      <input type="text" id="last_name" name="last" required>
+      <button type="submit" id="btn">Submit</button> 
+    </form>
+</div>
+<% if(name!= null){ %>  
+<% console.log(name, 'This is name from index.js')%>
+<% for (let i=0; i<name.length; i++){ %>
+  <div class="card mb-3">
     <img class="card-img-top" src="..." alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
+      <h5 class="card-title"><%=name[i].fname%></h5>
       <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
       <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
     </div>
   </div>
+<% }} %> 
+
 
 </body>
-<script src="../main.js"></script>
 </html>
