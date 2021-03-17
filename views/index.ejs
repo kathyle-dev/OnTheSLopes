@@ -1,52 +1,47 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>On The Slopes</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
+<%- include("head"); -%>
 <div class="form">
-    <form action="/posts" method="POST">
-      <h1 class = "post_title">What's on the Slope!</h1>
-      <input type="email" id="username" name="email" required>
-      <input type="input" id="user_text" name="user_text" required>
-<!--      <input type="text" id="zip" name="zip" required>-->
-      <label for="cars">Choose a selection:</label>
-      <select id="gear" name="gear_options">
-        <option value="equipment">Equipment</option>
-        <option value="car pooling">Car Pooling</option>
-        <option value="slope buddy">SLope Buddy</option>
-<!--        <option value="ski resorts">Ski Resorts</option>-->
-      </select>
-      <button type="submit" id="btn">Post</button>
-    </form>
+  <form action="/posts" method="POST">
+    <h1 class="post_title">What's on the Slope!</h1>
+    <input type="email" id="username" name="email" required />
+    <input type="input" id="user_text" name="user_text" required />
+    <!--      <input type="text" id="zip" name="zip" required>-->
+    <label for="cars">Choose a selection:</label>
+    <select id="gear" name="gear_options">
+      <option value="equipment">Equipment</option>
+      <option value="car pooling">Car Pooling</option>
+      <option value="slope buddy">SLope Buddy</option>
+      <!--        <option value="ski resorts">Ski Resorts</option>-->
+    </select>
+    <button type="submit" id="btn">Post</button>
+  </form>
+</div>
+
+<!--      Geolocation     -->
+<div class="geo">
+  <p>Click the button to see your nearby resorts!</p>
+  <button id="loc_btn">Nearby Resorts</button>
+  <p id="location"></p>
 </div>
 
 <div>
   <h1>Search nearby Ski Resorts</h1>
   <p>Input zip code</p>
-  <input type="text" id="zip" name="zip" required>
+  <input type="text" id="zip" name="zip" required />
   <button type="submit" id="zip_btn">Search</button>
 </div>
 
-<% if(posts!= null){ %>
-<% console.log(posts, 'This is name from index.js')%>
+<% if(posts!= null){ %> 
+<% console.log(posts, 'This is name from index.js') %>
 <% for (let i=0; i<posts.length; i++){ %>
   <div class="card mb-3">
-    <img class="card-img-top" src="..." alt="Card image cap">
+    <img class="card-img-top" src="..." alt="Card image cap" />
     <div class="card-body">
       <h5 class="card-title"><%=posts[i].email%></h5>
       <p class="card-text"><%=posts[i].text%>.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      <p class="card-text">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </p>
     </div>
   </div>
-<% }} %> 
-
-
-</body>
-</html>
+  <% }} %> 
+  <%- include("foot"); -%>
