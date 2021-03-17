@@ -38,7 +38,7 @@ app.post("/posts", (req, res) => {
     }
   );
 });
-app.get("/", (req, res) => {
+app.get("/main", (req, res) => {
   console.log("Sent from Get on Server");
   data
     .collection("posts")
@@ -49,6 +49,20 @@ app.get("/", (req, res) => {
         posts: result || null,
       });
     });
+});
+
+// Route to the Welcome Page
+app.get("/", (req, res) => {
+    console.log("Sent from Get on Server");
+    data
+        .collection("posts")
+        .find()
+        .toArray((error, result) => {
+            if (error) return console.log(error);
+            res.render("welcome.ejs", {
+                posts: result || null,
+            });
+        });
 });
 
 //open sever  ============================================================
