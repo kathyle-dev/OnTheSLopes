@@ -37,22 +37,15 @@
 <div class="card mb-3">
   <img class="card-img-top" src="..." alt="Card image cap" />
   <div class="card-body">
-    <a href="../posts?location=<%=posts[i].email%>"><h5 class="card-title"><%=posts[i].email%></h5></a>
+    <a href="../posts?email=<%=posts[i].email%>"><h5 class="card-title"><%=posts[i].email%></h5></a>
     <p class="card-text"><%=posts[i].text%></p>
     <a href="../posts?location=<%=posts[i].location%>"><p><%=posts[i].location%></p></a>
-    <a href="../posts?location=<%=posts[i].category%>"><p><%=posts[i].category%></p></a>
+    <a href="../posts?category=<%=posts[i].category%>"><p><%=posts[i].category%></p></a>
     <p class="card-text">
       <small class="text-muted">Last updated 3 mins ago</small>
     </p>
   </div>
-<<<<<<< HEAD
-<% }} %>
-
-
-</body>
-</html>
-=======
 </div>
-  <% }} %> 
+  <% }} %>
   <%- include("foot"); -%>
->>>>>>> kathy
+

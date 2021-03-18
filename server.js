@@ -168,7 +168,6 @@ app.get("/posts", (req, res)=> {
             });
           });
     }
-   
 })
 
 // route middleware to ensure user is logged in ========================
