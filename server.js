@@ -100,6 +100,8 @@ app.post("/posts", (req, res) => {
     {
       email: req.body.email,
       text: req.body.user_text,
+      location: req.body.location,
+      category: req.body.category,
       comments: [],
     },
     (error, result) => {
