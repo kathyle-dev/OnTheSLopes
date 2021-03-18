@@ -107,8 +107,7 @@ app.post("/posts", (req, res) => {
     }
   );
 });
-app.get("/main", isLoggedIn, (req, res) => {
-  console.log("Sent from Get on Server");
+app.get("/main", (req, res) => {
   data
     .collection("posts")
     .find()
@@ -127,12 +126,9 @@ app.get("/resorts", (req, res) => {
   var longitude = req.body.longitude
   var latitude = req.body.latitude
   fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=ski+resort&location=${latitude},${longitude}&radius=200&key=AIzaSyAtPu42gd1Hg-FPPJFyDeiXl_-WjQZ--HI`)
-    //.then(response => response.json())
+    .then(response => response.json())
     .then(data => {
-      for (let i=0; i<data.results.length; i++){
-        console.log(data.results[i] + " is result number " + i + " from API back end");
-      }
-      let {results} = data;
+      let {results} = data
       res.send(results)
     })
 });
