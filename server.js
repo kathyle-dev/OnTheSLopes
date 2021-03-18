@@ -91,10 +91,11 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+// ===========================================
 //OUR APP ROUTES ==============================
+
+//adds a new Post to the database
 app.post("/posts", (req, res) => {
-  console.log(req.body + "Request body sent from POST");
-  //   console.log(req.body.first_name + " was added by post on Server");
   data.collection("posts").insertOne(
     {
       email: req.body.email,
@@ -107,6 +108,9 @@ app.post("/posts", (req, res) => {
     }
   );
 });
+
+
+//Route to the main page after authentication
 app.get("/main", (req, res) => {
   data
     .collection("posts")
@@ -119,8 +123,7 @@ app.get("/main", (req, res) => {
     });
 });
 
-//location handling
-//we can round up geo =>
+//Using Google Place Search API to find the nearest ski resorts within 200 mi of the user
 app.get("/resorts", (req, res) => {
   console.log("Sent from Get on Server/resorts");
   var longitude = req.body.longitude
@@ -133,8 +136,7 @@ app.get("/resorts", (req, res) => {
     })
 });
 
-
-// Route to the Welcome Page
+// Route to the Welcome/ Home Page
 app.get("/", (req, res) => {
   console.log("Sent from Get on Server");
   data
@@ -147,6 +149,25 @@ app.get("/", (req, res) => {
       });
     });
 });
+
+//FILTERING METHOD ================================================
+app.get("/posts", (req, res)=> {
+    const queries = Object.keys(req.query)
+    const values = Object.values(req.query)
+    if(queries.length === 1){
+        let findBy = {}
+        findBy[`${queries[0]}`] = values[0]
+        data.collection("posts")
+        .find(findBy)
+        .toArray((error, result) => {
+            if (error) return console.log(error);
+            res.render("index.ejs", {
+              posts: result || null,
+            });
+          });
+    }
+   
+})
 
 // route middleware to ensure user is logged in ========================
 function isLoggedIn(req, res, next) {
