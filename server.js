@@ -130,7 +130,7 @@ app.get("/resorts", (req, res) => {
   console.log("Sent from Get on Server/resorts");
   var longitude = req.body.longitude
   var latitude = req.body.latitude
-  fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=ski+resort&location=${latitude},${longitude}&radius=200&key=AIzaSyAtPu42gd1Hg-FPPJFyDeiXl_-WjQZ--HI`)
+  fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=ski+resort&location=${latitude},${longitude}&radius=200&key=${process.env.GOOGLE_API}`)
     .then(response => response.json())
     .then(data => {
       let {results} = data
