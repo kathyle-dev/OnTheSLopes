@@ -152,6 +152,10 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/nearby_resorts", (req, res) => {
+  res.render("resorts.ejs");
+});
+
 //FILTERING METHOD ================================================
 app.get("/posts", (req, res)=> {
     const queries = Object.keys(req.query)
