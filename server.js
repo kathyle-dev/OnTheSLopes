@@ -162,6 +162,7 @@ app.get("/nearby_resorts", (req, res) => {
 
 //FILTERING METHOD ================================================
 app.get("/posts", (req, res)=> {
+    const user = req.user.local.email
     const queries = Object.keys(req.query)
     const values = Object.values(req.query)
     if(queries.length === 1){
@@ -173,6 +174,7 @@ app.get("/posts", (req, res)=> {
             if (error) return console.log(error);
             res.render("index.ejs", {
               posts: result || null,
+              user: user,
             });
           });
     }
