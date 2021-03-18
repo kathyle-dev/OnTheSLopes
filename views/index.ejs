@@ -2,9 +2,9 @@
 <div class="form">
   <form action="/posts" method="POST">
     <h1 class="post_title">What's on the Slope!</h1>
-    <input type="email" id="username" name="email" required />
-    <input type="input" id="user_text" name="user_text" required />
-    <input type="input" id="location" name="location" required />
+    <input type="email" id="username" name="email" placeholder="Email" value="<%=user%>" required />
+    <input type="input" id="user_text" name="user_text" placeholder="Your Message" required />
+    <input type="input" id="location" name="location" placeholder="State in XX" maxlength="2" required />
 
     <label for="category_menu">Category:</label>
     <select id="category" name="category">
@@ -32,18 +32,20 @@
 </div>
 
 <% if(posts!= null){ %> 
-<% console.log(posts, 'This is name from index.js') %>
 <% for (let i=0; i<posts.length; i++){ %>
 <div class="card mb-3">
-  <img class="card-img-top" src="..." alt="Card image cap" />
+  <img class="card-img-top" src="<%=posts[i].picture%>"" alt="Poster's picture" />
   <div class="card-body">
     <a href="../posts?email=<%=posts[i].email%>"><h5 class="card-title"><%=posts[i].email%></h5></a>
     <p class="card-text"><%=posts[i].text%></p>
     <a href="../posts?location=<%=posts[i].location%>"><p><%=posts[i].location%></p></a>
     <a href="../posts?category=<%=posts[i].category%>"><p><%=posts[i].category%></p></a>
+    <%if(user === posts[i].email){ %> 
     <p class="card-text">
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <button class="edit-btn btn btn-default btn-warning">EDIT</button>
+      <button class="delete-btn btn btn-default btn-danger">DELETE</button>
     </p>
+    <% }%>
   </div>
 </div>
   <% }} %>

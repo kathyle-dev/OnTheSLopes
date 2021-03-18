@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 8080;
 const express = require("express");
 const app = express();
 const cors = require("cors");
-require("dotenv").config();
+const ObjectId = require('mongodb').ObjectID
 
 //middleware uses  ======================================================
 app.set("view engine", "ejs"); // set up ejs for templating
@@ -96,33 +96,37 @@ app.get("/logout", (req, res) => {
 
 //adds a new Post to the database
 app.post("/posts", (req, res) => {
+    let state = req.body.location
   data.collection("posts").insertOne(
     {
       email: req.body.email,
       text: req.body.user_text,
-      location: req.body.location,
+      location: state.toUpperCase(),
       category: req.body.category,
       comments: [],
     },
     (error, result) => {
       if (error) return console.log(error);
-      res.redirect("/");
+      res.redirect("/main");
     }
   );
 });
 
 
 //Route to the main page after authentication
-app.get("/main", (req, res) => {
+app.get("/main", isLoggedIn, (req, res) => {
+const user = req.user.local.email
   data
     .collection("posts")
     .find()
     .toArray((error, result) => {
       if (error) return console.log(error);
+      
       res.render("index.ejs", {
         posts: result || null,
+        user: user,
       });
-    });
+    })
 });
 
 //Using Google Place Search API to find the nearest ski resorts within 200 mi of the user

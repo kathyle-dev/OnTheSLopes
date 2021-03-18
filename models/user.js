@@ -16,7 +16,6 @@ userSchema.methods.generateHash = (password) =>{
 
 //checking if password is valid
 userSchema.methods.validPassword = (password, user) => {
-    console.log(user.local, "THIS IS THE USER PASSED IN")
     return bcrypt.compareSync(password, user.local.password);
 }
 
