@@ -7,6 +7,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const ObjectId = require('mongodb').ObjectID
+const multer = require('multer');
 
 //middleware uses  ======================================================
 app.set("view engine", "ejs"); // set up ejs for templating
@@ -94,15 +95,31 @@ app.get("/logout", (req, res) => {
 // ===========================================
 //OUR APP ROUTES ==============================
 
+//UPLOAD IMAGES AND SAVE THEM IN OUR DATABASE =========================
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'public/uploads')
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now() + ".png")
+    }
+});
+var upload = multer({storage: storage});
+
 //adds a new Post to the database
-app.post("/posts", (req, res) => {
-    let state = req.body.location
+app.post("/posts", upload.single('file-to-upload'), (req, res) => {
+    let file = null
+    if(typeof req.file !== "undefined")
+        file = 'uploads/' + req.file.filename
+    
   data.collection("posts").insertOne(
     {
+      email: req.user.local.email,  
       poster_avatar: req.body.poster_avatar,
       text: req.body.user_text,
-      location: state.toUpperCase(),
+      location: req.body.location,
       category: req.body.category,
+      picture: file,
       comments: [],
     },
     (error, result) => {
@@ -174,45 +191,48 @@ app.delete("/delete", (req, res) =>{
 })
 
 //route to EDIT post
-app.put("/edit", (req, res) =>{
-    let state = req.body.location
+app.post("/edit", upload.single('file-to-upload'), (req, res) =>{
     data.collection("posts")
-    .findOneAndUpdate({_id: ObjectID(req.body.id)}, {
+    .findOneAndUpdate({_id: ObjectID(req.body.postId)}, {
         $set: {
             email: req.body.email,
             text: req.body.user_text,
-            location: state.toUpperCase(),
+            location: req.body.location,
             category: req.body.category,
-            picture: req.body.picture
+            picture: 'uploads/' + req.file.filename
         }
       }, {
         sort: {_id: -1},
         upsert: true
       }, (err, result) => {
         if (err) return res.send(err)
-        res.send(result)
+        res.redirect("/main")
       })
 })
 
 //FILTERING METHOD ================================================
+
 app.get("/posts", (req, res)=> {
     const user = req.user.local
-    const queries = Object.keys(req.query)
-    const values = Object.values(req.query)
-    if(queries.length === 1){
-        let findBy = {}
-        findBy[`${queries[0]}`] = values[0]
-        data.collection("posts")
-        .find(findBy)
-        .toArray((error, result) => {
-            if (error) return console.log(error);
-            res.render("index.ejs", {
-              posts: result || null,
-              user: user,
-              msg: null,
-            });
+    const queries = []
+    Object.entries(req.query).forEach(([key,value])=> {
+        if(value !== ""){
+            let temp = {}
+            temp[`${key}`] = value
+            queries.push(temp)
+        }
+    })
+    data.collection("posts")
+    .find({$and: queries})
+    .toArray((error, result) => {
+         if (error) return console.log(error);
+         res.render("index.ejs", {
+           posts: result || null,
+           user: user,
+           msg: null,
           });
-    }
+      });
+    
 })
 
 // route middleware to ensure user is logged in ========================

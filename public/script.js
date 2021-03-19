@@ -1,60 +1,19 @@
-// EVENT LISTENER TO EDIT & DELETE POSTS ================================
+// EVENT LISTENER TO DELETE POSTS ======================================
 //=======================================================================
 
-let editBtns = document.getElementsByClassName("edit")
 let deleteBtns = document.getElementsByClassName("delete")
-let allBtns = [...editBtns, ...deleteBtns]
 
-allBtns.forEach(btn => {
+Array.from(deleteBtns).forEach(btn => {
   btn.addEventListener("click", handleButtonClick)
 })
 
 function handleButtonClick(e){
   const postId = e.target.dataset.id
-  if(e.target.classList.contains("edit")){
-    editCard(postId)
-  }else if(e.target.classList.contains("delete")){
     deleteCard(postId)
-  }
-}
-
-function editCard(id){
-  document.getElementById(`edit-form-${id}`).addEventListener("submit", (e)=>{
-    let elements = e.target.elements
-    let formData = getFormData(elements)
-    formData.id = id
-    putFetchCall(formData)
-    e.preventDefault()
-  })
-}
-
-function putFetchCall(data){
-  fetch("edit", {
-    method: "put",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      console.log(res)
-      window.location.reload()
-    })
- }
-
-function getFormData(elements){
-  let formData = {};
-  for(let i= 0; i< elements.length; i++){
-      if(elements[i].tagName === "INPUT" || elements[i].tagName === "SELECT" ){
-          const key = elements[i].name
-          const value = elements[i].value
-          formData[`${key}`] = value
-      }
-  }
-  return formData;
 }
 
 function deleteCard(id){
+
   fetch("delete", {
     method: "delete",
     headers: {

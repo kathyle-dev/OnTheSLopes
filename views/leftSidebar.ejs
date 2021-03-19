@@ -11,18 +11,23 @@
     </div>
     <br>
 
-    <!-- Interests -->
+    <!-- FILTER -->
     <div class="w3-card w3-round w3-white w3-hide-small">
       <div class="w3-container">
-        <p>Interests</p>
+        <p>FILTER</p>
         <p>
-          <span class="w3-tag w3-small w3-theme-d5">Snowboarding</span>
-          <span class="w3-tag w3-small w3-theme-d4">Ski Hills</span>
-          <span class="w3-tag w3-small w3-theme-d3">Snow Tubing</span>
-          <span class="w3-tag w3-small w3-theme-d2">Snow Games</span>
-          <span class="w3-tag w3-small w3-theme-d1">Friends</span>
-          <span class="w3-tag w3-small w3-theme">Lift Ticket</span>
-          <span class="w3-tag w3-small w3-theme-l2">Food</span>
+          <form action="/posts" method="GET">
+            <input placeholder="Email?" name="email">
+            <input style="text-transform: uppercase" oninput="this.value = this.value.toUpperCase()" placeholder="State? in XX" maxlength="2" name="location">
+            <select name="category">
+              <option value="">Category</option>
+              <option value="equipment">Equipment</option>
+              <option value="car pooling">Car Pooling</option>
+              <option value="slope buddy">SLope Buddy</option>
+            </select>
+            <button class="w3-button w3-theme-d1 w3-margin-bottom" type="submit"><i class="fa fa-search" aria-hidden="true"></i> FIND</button>
+            <a href="/main"><button class="w3-button w3-theme-d1 w3-margin-bottom" type="button"> GET ALL</button></a>
+          </form>
         </p>
       </div>
     </div>

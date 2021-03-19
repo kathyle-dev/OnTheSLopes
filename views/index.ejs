@@ -26,14 +26,17 @@
       <div class="w3-card w3-round w3-white">
         <div class="w3-container w3-padding">
           <div class="form">
-            <form action="/posts" method="POST">
+            <form action="/posts" method="POST" enctype="multipart/form-data">
               <h1 class="post_title">What's on the Slope!</h1>
               <label>
                 <input class="hide" type="radio" id="poster_avatar" name="poster_avatar" value="<%=user.avatar%>" checked/>
                 <img class="avatar" src="<%=user.avatar%>" alt="poster's avatar">
               </label>
               <input type="input" id="user_text" name="user_text" placeholder="Your Message" required />
-              <input type="input" id="location" name="location" placeholder="State in XX" maxlength="2" required />
+              <input type="input" id="location" name="location" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase" placeholder="State in XX" maxlength="2" required />
+
+              <label for="file-to-upload">Add A Picture: </label>
+              <input type="file" name="file-to-upload">
 
               <label for="category_menu">Category:</label>
               <select id="category" name="category">
@@ -41,7 +44,7 @@
                 <option value="car pooling">Car Pooling</option>
                 <option value="slope buddy">SLope Buddy</option>
               </select>
-              <button type="submit" id="btn">Post</button>
+              <button class="w3-button w3-theme-d1 w3-margin-bottom" type="submit" id="btn">Post</button>
             </form>
           </div>
         </div>
@@ -64,6 +67,9 @@
   <a href="../posts?email=<%=posts[i].email%>"><h4 class="card-title"><%=posts[i].email%></h4><br></a>
   <hr class="w3-clear">
   <p class="card-text"><%=posts[i].text%></p>
+  <%if(posts[i].picture!=null){%>
+  <img src="../<%=posts[i].picture%>" alt="post image">
+  <%}%>
   <div class="w3-row-padding" style="margin:0 -16px">
     <div class="w3-half">
       <span class="w3-right w3-opacity"><a href="../posts?category=<%=posts[i].category%>"><p><%=posts[i].category%></p></a></span>
@@ -83,17 +89,19 @@
               <h5 class="modal-title" id="staticBackdropLabel">Edit Your Post</h5>
          </div>
       <div class="modal-body">
-         <form id="edit-form-<%=posts[i]._id%>">
+         <form action="/edit" method="post" id="edit-form-<%=posts[i]._id%>" enctype="multipart/form-data">
              <input type="text" placeholder="Email" value="<%=posts[i].email%>" name="email" required>
              <input type="text" placeholder="Your Message" value="<%=posts[i].text%>" name="user_text" required>
-             <input type="text" placeholder="State in XX" value="<%=posts[i].location%>" name="location" required>
-             <input type="text" placeholder="Picture" value="<%=posts[i].picture%>" name="picture">
+             <input type="text" placeholder="State in XX" value="<%=posts[i].location%>" name="location" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase" required>
+             <label for="file-to-upload">Add A Picture: </label>
+              <input type="file" name="file-to-upload">
              <label for="category_menu">Category:</label>
                 <select name="category" required>
                   <option value="equipment">Equipment</option>
                   <option value="car pooling">Car Pooling</option>
                   <option value="slope buddy">SLope Buddy</option>
                 </select>
+                <input type="hidden" id="postId" name="postId" value="<%=posts[i]._id%>">
              <button class="btn btn-warning" type="submit" >SAVE</button>
           </form>
      </div>

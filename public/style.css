@@ -6,8 +6,8 @@ body, h1, h2, h3, h4, h5 {
     -webkit-border-radius:50px;
     -moz-border-radius:50px;
     border-radius:50px;
-    width:90px;
-    height:90px;
+    width:80px;
+    height:80px;
 }
 
 .hide{
