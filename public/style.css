@@ -21,4 +21,15 @@ body, h1, h2, h3, h4, h5 {
     position: sticky;
     top: 80px;
   }
+
+#near {
+    border-style: groove;
+    border-color: darkslategrey;
+    border-width: medium;
+    padding: 15px;
+}
+
+#main_title {
+    font-family: Papyrus;
+}
   

@@ -1,39 +1,67 @@
-<!doctype html> <!--Welcome Page-->
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>On The Slopes</title>
-    <link rel="stylesheet" href="../public/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-</head>
+<!DOCTYPE html>
+<html lang="en">
+<title>On The SLopes</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-    body,h1 {font-family: "Raleway", sans-serif}
-    body, html {height: 100%}
-    .bgimg {
-        background-image: url('images/SLopes.jpeg');
-        min-height: 100%;
-        background-position: center;
-        background-size: cover;
-    }
+    body {font-family: "Lato", sans-serif}
+    .mySlides {display: none}
 </style>
 <body>
-<div class="bgimg w3-display-container w3-animate-opacity w3-text-black">
-    <div class="w3-display-topleft w3-padding-large w3-xlarge">
-        Logo
-    </div>
-    <div class="w3-display-middle">
-        <h1 class="w3-jumbo w3-animate-top">COMING SOON</h1>
-        <hr class="w3-border-grey" style="margin:auto;width:40%">
-        <p class="w3-large w3-center">35 days left</p>
-    </div>
-    <div class="w3-display-bottomleft w3-padding-large">
-        Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>
+<!-- Navbar -->
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+<!--        <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>-->
+        <a href="http://localhost:8080/" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+        <a href="http://localhost:8080/login" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Login</a>
+        <a href="http://localhost:8080/signup" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Sign Up</a>
     </div>
 </div>
+</div>
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+    <!-- The Band Section -->
+    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+        <h2 class="w3-wide">Welcome to On the SLopes</h2>
+        <p class="w3-opacity"><i>We love SKing</i></p>
+        <p class="w3-justify">We are a social platform for all things Sking/SNowboarding. Yes! finally you can find nearby ski resorts and see what others in
+            that area are talking about On the SLopes!!! Ever need any equipment, a car pool, or a slope buddy just login or sign up to view the posts. Now Go Ride those Slopes!!!</p>
+        <div class="w3-row w3-padding-32">
+            <div class="w3-third">
+                <a href="https://www.linkedin.com/in/kathyle-dev/"><p>Young Kathy</p></a>
+                <p>On The SLopes Tech Guru</p>
+                <img src="../img/kathy.png" class="w3-round w3-margin-bottom" alt="Kathy" style="width:60%">
+            </div>
+            <div class="w3-third">
+                <a href="https://www.linkedin.com/feed/"><p>Terrance</p></a>
+                <p>Jonin Level SLopes Guide</p>
+                <img src="../img/terrance.png" class="w3-round w3-margin-bottom" alt="Random Name" style="width:60%">
+            </div>
+            <div class="w3-third">
+                <a href="https://www.linkedin.com/in/amin-ahmadi-97487822/"><p>Amin</p></a>
+                <p>Hokage Level Skier</p>
+                <img src="../img/amin.png" class="w3-round" alt="Random Name" style="width:60%">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+    <p class="w3-medium">Powered by <a href="https://www.linkedin.com/in/nellysugu/" target="_blank">The Guy WHo Taught US</a></p>
+</footer>
+
 </body>
 </html>
+
+)

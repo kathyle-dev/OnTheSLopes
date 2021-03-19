@@ -46,10 +46,10 @@ function displayResorts(data) {
     // } = data[i];
     // isOpen = isOpen.toString();
     // console.log(open_now);
-    cards += `<div class="card" style="width: 18rem;">
+    cards += `<div id="near" class="card" style="width: 100rem;">
         <div class="card_class">
             <h5 class="card-title">${name}</h5>
-            <p class="card-text">${rating}</p>
+            <p class="card-text">${rating} - Stars</p>
         </div>
     </div>`;
   }

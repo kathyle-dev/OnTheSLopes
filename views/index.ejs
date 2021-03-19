@@ -27,14 +27,14 @@
         <div class="w3-container w3-padding">
           <div class="form">
             <form action="/posts" method="POST" enctype="multipart/form-data">
-              <h1 class="post_title">What's on the Slope!</h1>
+              <h2 id="main_title" class="post_title">What's on the SLope!</h2>
               <label>
                 <input class="hide" type="radio" id="poster_avatar" name="poster_avatar" value="<%=user.avatar%>" checked/>
                 <img class="avatar" src="<%=user.avatar%>" alt="poster's avatar">
               </label>
               <input type="input" id="user_text" name="user_text" placeholder="Your Message" required />
               <input type="input" id="location" name="location" oninput="this.value = this.value.toUpperCase()" style="text-transform: uppercase" placeholder="State in XX" maxlength="2" required />
-
+                <br>
               <label for="file-to-upload">Add A Picture: </label>
               <input type="file" name="file-to-upload">
 
@@ -51,14 +51,6 @@
       </div>
     </div>
   </div>
-
-
-<!-- <div>
-  <h1>Search nearby Ski Resorts</h1>
-  <p>Input zip code</p>
-  <input type="text" id="zip" name="zip" required />
-  <button type="submit" id="zip_btn">Search</button>
-</div> -->
 
 <% if(posts!= null){ %>
   <% for (let i=0; i<posts.length; i++){ %>
