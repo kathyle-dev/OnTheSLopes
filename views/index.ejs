@@ -1,53 +1,123 @@
 <%- include("head"); -%>
-<div class="form">
-  <form action="/posts" method="POST">
-    <h1 class="post_title">What's on the Slope!</h1>
-    <input type="email" id="username" name="email" placeholder="Email" value="<%=user%>" required />
-    <input type="input" id="user_text" name="user_text" placeholder="Your Message" required />
-    <input type="input" id="location" name="location" placeholder="State in XX" maxlength="2" required />
+<%- include("navbar"); -%>
 
-    <label for="category_menu">Category:</label>
-    <select id="category" name="category">
-      <option value="equipment">Equipment</option>
-      <option value="car pooling">Car Pooling</option>
-      <option value="slope buddy">SLope Buddy</option>
-      <!--        <option value="ski resorts">Ski Resorts</option>-->
-    </select>
-    <button type="submit" id="btn">Post</button>
-  </form>
-</div>
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+  <!-- The Grid -->
+  <div class="w3-row">
 
-<!--      Geolocation     -->
-<div class="geo">
-  <p>Click the button to see your nearby resorts!</p>
-  <a href="/nearby_resorts"><button>Nearby Resorts</button></a>
-  <p id="location"></p>
-</div>
+<%- include("leftSidebar"); -%>
 
-<div>
+ <!-- Middle Column -->
+ <div class="w3-col m7">
+
+  <div class="w3-row-padding">
+    
+       <!-- Successful Post Alert -->
+<%if(msg!=null){%>
+  <div id="alertDiv" class="alert alert-success alert-dismissible fade show w3-container w3-card w3-round" role="alert">
+    <strong>Holy guacamole!</strong> Your post was successful!
+    <button type="button" id="close" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <%}%>
+  <div class="w3-col m12">
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container w3-padding">
+          <div class="form">
+            <form action="/posts" method="POST">
+              <h1 class="post_title">What's on the Slope!</h1>
+              <label>
+                <input class="hide" type="radio" id="poster_avatar" name="poster_avatar" value="<%=user.avatar%>" checked/>
+                <img class="avatar" src="<%=user.avatar%>" alt="poster's avatar">
+              </label>
+              <input type="input" id="user_text" name="user_text" placeholder="Your Message" required />
+              <input type="input" id="location" name="location" placeholder="State in XX" maxlength="2" required />
+
+              <label for="category_menu">Category:</label>
+              <select id="category" name="category">
+                <option value="equipment">Equipment</option>
+                <option value="car pooling">Car Pooling</option>
+                <option value="slope buddy">SLope Buddy</option>
+              </select>
+              <button type="submit" id="btn">Post</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- <div>
   <h1>Search nearby Ski Resorts</h1>
   <p>Input zip code</p>
   <input type="text" id="zip" name="zip" required />
   <button type="submit" id="zip_btn">Search</button>
-</div>
+</div> -->
 
-<% if(posts!= null){ %> 
-<% for (let i=0; i<posts.length; i++){ %>
-<div class="card mb-3">
-  <img class="card-img-top" src="<%=posts[i].picture%>"" alt="Poster's picture" />
-  <div class="card-body">
-    <a href="../posts?email=<%=posts[i].email%>"><h5 class="card-title"><%=posts[i].email%></h5></a>
-    <p class="card-text"><%=posts[i].text%></p>
-    <a href="../posts?location=<%=posts[i].location%>"><p><%=posts[i].location%></p></a>
-    <a href="../posts?category=<%=posts[i].category%>"><p><%=posts[i].category%></p></a>
-    <%if(user === posts[i].email){ %> 
-    <p class="card-text">
-      <button class="edit-btn btn btn-default btn-warning">EDIT</button>
-      <button class="delete-btn btn btn-default btn-danger">DELETE</button>
-    </p>
+<% if(posts!= null){ %>
+  <% for (let i=0; i<posts.length; i++){ %>
+<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+  <img src="<%=posts[i].poster_avatar%>" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:40px">
+  <a href="../posts?email=<%=posts[i].email%>"><h4 class="card-title"><%=posts[i].email%></h4><br></a>
+  <hr class="w3-clear">
+  <p class="card-text"><%=posts[i].text%></p>
+  <div class="w3-row-padding" style="margin:0 -16px">
+    <div class="w3-half">
+      <span class="w3-right w3-opacity"><a href="../posts?category=<%=posts[i].category%>"><p><%=posts[i].category%></p></a></span>
+      <a href="../posts?location=<%=posts[i].location%>"><p><%=posts[i].location%></p></a>
+    </div>
+  </div>
+
+    <%if(user.email === posts[i].email){ %> 
+      <button type="button" data-bs-toggle="modal" data-bs-target="#editCard<%=posts[i]._id%>" data-id="<%=posts[i]._id%>" class="edit w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-pencil"></i>EDIT</button>
+      <button type="button" data-id="<%=posts[i]._id%>" class="delete w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-trash"></i>DELETE</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editCard<%=posts[i]._id%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+         <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Edit Your Post</h5>
+         </div>
+      <div class="modal-body">
+         <form id="edit-form-<%=posts[i]._id%>">
+             <input type="text" placeholder="Email" value="<%=posts[i].email%>" name="email" required>
+             <input type="text" placeholder="Your Message" value="<%=posts[i].text%>" name="user_text" required>
+             <input type="text" placeholder="State in XX" value="<%=posts[i].location%>" name="location" required>
+             <input type="text" placeholder="Picture" value="<%=posts[i].picture%>" name="picture">
+             <label for="category_menu">Category:</label>
+                <select name="category" required>
+                  <option value="equipment">Equipment</option>
+                  <option value="car pooling">Car Pooling</option>
+                  <option value="slope buddy">SLope Buddy</option>
+                </select>
+             <button class="btn btn-warning" type="submit" >SAVE</button>
+          </form>
+     </div>
+     <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+         </div>
+          </div>
+     </div>
     <% }%>
   </div>
-</div>
   <% }} %>
+
+  <!-- End Middle Column -->
+</div>
+
+  <%- include("rightSidebar"); -%>
+
+      <!-- End Grid -->
+    </div>
+
+    <!-- End Page Container -->
+  </div>
+
+
   <%- include("foot"); -%>
 

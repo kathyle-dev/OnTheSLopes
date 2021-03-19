@@ -1,55 +1,100 @@
-document.getElementById("loc_btn").addEventListener("click", getLocation);
-var loc = document.getElementById("location");
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(savePosition);
-    sendCoordinates();
-  } else {
-    loc.innerHTML = "Geolocation is not supported by this browser.";
+// EVENT LISTENER TO EDIT & DELETE POSTS ================================
+//=======================================================================
+
+let editBtns = document.getElementsByClassName("edit")
+let deleteBtns = document.getElementsByClassName("delete")
+let allBtns = [...editBtns, ...deleteBtns]
+
+allBtns.forEach(btn => {
+  btn.addEventListener("click", handleButtonClick)
+})
+
+function handleButtonClick(e){
+  const postId = e.target.dataset.id
+  if(e.target.classList.contains("edit")){
+    editCard(postId)
+  }else if(e.target.classList.contains("delete")){
+    deleteCard(postId)
   }
 }
-let body;
-function savePosition(position) {
-  body = {
-    longitude: position.coords.longitude,
-    latitude: position.coords.latitude,
-  };
+
+function editCard(id){
+  document.getElementById(`edit-form-${id}`).addEventListener("submit", (e)=>{
+    let elements = e.target.elements
+    let formData = getFormData(elements)
+    formData.id = id
+    putFetchCall(formData)
+    e.preventDefault()
+  })
 }
 
-//send the form inputs to a backend route
-function sendCoordinates() {
-  const URL = "/resorts";
-  fetch(URL, {
-    method: "GET",
+function putFetchCall(data){
+  fetch("edit", {
+    method: "put",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(data),
   })
-    .then((res) => res.json())
-    //.then((data) => console.log(data))
-    .then((data) => displayResorts(data))
-    .catch((err) => console.log(err));
-}
-let cards = "";
+    .then((res) => {
+      console.log(res)
+      window.location.reload()
+    })
+ }
 
-function displayResorts(data) {
-  for (let i = 0; i < data.length; i++) {
-    //console.log(data[i]);
-    let name = data[i].name;
-    //let picture = data[i].photos[0].photo_reference;
-    let rating = data[i].rating;
-    // let {
-    //   opening_hours: { open_now },
-    // } = data[i];
-    // isOpen = isOpen.toString();
-    // console.log(open_now);
-    cards += `<div class="card" style="width: 18rem;">
-        <div class="card_class">
-            <h5 class="card-title">${name}</h5>
-            <p class="card-text">${rating}</p>
-        </div>
-    </div>`;
+function getFormData(elements){
+  let formData = {};
+  for(let i= 0; i< elements.length; i++){
+      if(elements[i].tagName === "INPUT" || elements[i].tagName === "SELECT" ){
+          const key = elements[i].name
+          const value = elements[i].value
+          formData[`${key}`] = value
+      }
   }
-  document.getElementById("resorts_container").innerHTML = cards;
+  return formData;
+}
+
+function deleteCard(id){
+  fetch("delete", {
+    method: "delete",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({id}),
+  })
+    .then((res) => {
+      window.location.reload()
+    })
+}
+
+//to remove the successful post add alert
+document.getElementById("close").addEventListener("click", ()=>{
+  document.getElementById("alertDiv").remove()
+})
+
+
+// JS FOR PAGE STYLING ================================
+//=======================================================================
+
+// Accordion
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-theme-d1";
+  } else {
+    x.className = x.className.replace("w3-show", "");
+    x.previousElementSibling.className =
+            x.previousElementSibling.className.replace(" w3-theme-d1", "");
+  }
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
 }

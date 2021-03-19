@@ -1,3 +1,24 @@
-/*body{*/
-/*    background-color: yellow;*/
-/*}*/
+body, h1, h2, h3, h4, h5 {
+    font-family: "Open Sans", sans-serif
+}
+
+.avatar{
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius:50px;
+    width:90px;
+    height:90px;
+}
+
+.hide{
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sticky {
+    position: sticky;
+    top: 80px;
+  }
+  

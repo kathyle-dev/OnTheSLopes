@@ -38,7 +38,7 @@ app.use(flash()); //used for flash messages particularly with login/sign up mess
 
 //connect to mongoDB database ============================================
 const mongoose = require("mongoose");
-const { Db } = require("mongodb");
+const { Db, ObjectID } = require("mongodb");
 const { response } = require("express");
 
 var data;
@@ -99,7 +99,7 @@ app.post("/posts", (req, res) => {
     let state = req.body.location
   data.collection("posts").insertOne(
     {
-      email: req.body.email,
+      poster_avatar: req.body.poster_avatar,
       text: req.body.user_text,
       location: state.toUpperCase(),
       category: req.body.category,
@@ -107,6 +107,7 @@ app.post("/posts", (req, res) => {
     },
     (error, result) => {
       if (error) return console.log(error);
+      req.session.message = "post added!"
       res.redirect("/main");
     }
   );
@@ -115,7 +116,8 @@ app.post("/posts", (req, res) => {
 
 //Route to the main page after authentication
 app.get("/main", isLoggedIn, (req, res) => {
-const user = req.user.local.email
+const user = req.user.local
+const msg = req.session.message
   data
     .collection("posts")
     .find()
@@ -125,6 +127,7 @@ const user = req.user.local.email
       res.render("index.ejs", {
         posts: result || null,
         user: user,
+        msg: msg,
       });
     })
 });
@@ -156,13 +159,44 @@ app.get("/", (req, res) => {
     });
 });
 
+//route to nearby resorts page
 app.get("/nearby_resorts", (req, res) => {
   res.render("resorts.ejs");
 });
 
+//route to DELETE posts
+app.delete("/delete", (req, res) =>{
+    data.collection("posts").findOneAndDelete({_id: ObjectID(req.body.id)}, (error, result) => {
+        if (error) return console.log(error)
+        req.session.message = null
+        res.status(200).send("Post Deleted!")
+    })
+})
+
+//route to EDIT post
+app.put("/edit", (req, res) =>{
+    let state = req.body.location
+    data.collection("posts")
+    .findOneAndUpdate({_id: ObjectID(req.body.id)}, {
+        $set: {
+            email: req.body.email,
+            text: req.body.user_text,
+            location: state.toUpperCase(),
+            category: req.body.category,
+            picture: req.body.picture
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: true
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+})
+
 //FILTERING METHOD ================================================
 app.get("/posts", (req, res)=> {
-    const user = req.user.local.email
+    const user = req.user.local
     const queries = Object.keys(req.query)
     const values = Object.values(req.query)
     if(queries.length === 1){
@@ -175,6 +209,7 @@ app.get("/posts", (req, res)=> {
             res.render("index.ejs", {
               posts: result || null,
               user: user,
+              msg: null,
             });
           });
     }

@@ -5,7 +5,8 @@ const bcrypt = require("bcrypt") //this will help generate has for passwords
 var userSchema = mongoose.Schema({
     local:{
         email: String,
-        password: String
+        password: String,
+        avatar: String
     }
 });
 
