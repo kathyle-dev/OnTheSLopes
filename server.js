@@ -192,6 +192,9 @@ app.delete("/delete", (req, res) =>{
 
 //route to EDIT post
 app.post("/edit", upload.single('file-to-upload'), (req, res) =>{
+    let file = null
+    if(typeof req.file !== "undefined")
+        file = 'uploads/' + req.file.filename
     data.collection("posts")
     .findOneAndUpdate({_id: ObjectID(req.body.postId)}, {
         $set: {
@@ -199,7 +202,7 @@ app.post("/edit", upload.single('file-to-upload'), (req, res) =>{
             text: req.body.user_text,
             location: req.body.location,
             category: req.body.category,
-            picture: 'uploads/' + req.file.filename
+            picture: file
         }
       }, {
         sort: {_id: -1},
